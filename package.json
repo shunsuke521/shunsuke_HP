@@ -1,0 +1,21 @@
+{
+  "name": "html_css_op",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-css": "sass --watch style.scss:style.css",
+    "build-js": "browserify js/script.js > bundle/script.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-stylus": "^2.7.0",
+    "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1"
+  }
+}

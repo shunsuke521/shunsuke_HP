@@ -1,0 +1,942 @@
+@import 'reset.css';
+
+// =====================================
+// レスポンシブブレイクポイント
+// =====================================
+$breakpoints:(
+    'sm': 'screen and (max-width: 414px)',
+    'md': 'screen and (max-width: 768px)',
+    'lg': 'screen and (max-width: 1000px)',
+    'xl': 'screen and (max-width: 1200px)',
+ ) !default;
+
+// =====================================
+// mixin
+// =====================================
+@mixin mq($breakpoint:sm){
+    @media #{map-get($breakpoints, $breakpoint)}{
+        @content;
+    }
+}
+//map-get()の第一引数に変数名、第二引数にマップ型のキーを渡すと、マップ型の値が返る
+//#{}は「インターポーレーション」といい、演算できない箇所や変数の使えない箇所でも使えるようにするもの　calcなどでよく使う
+
+
+// =====================================
+// 変数
+// =====================================
+$theme-color-dark: #262626;
+$theme-color-dark__tp: rgba(38, 38, 38, .6); 
+$theme-color-light: #E1DCD9;
+$theme-color-light__tp: rgba(225, 220, 217, .6);
+$meter-color:#313437;
+
+$site-width: 980px;
+
+$font-size_ss:12px;
+$font-size_s:16px;
+$font-size_m:20px;
+$font-size_l:32px;
+$font-size_xl:40px;
+$font-size_xxl:48px;
+$font-size_xxxl:56px;
+$font-size_top:180px;
+
+$space_s:8px;
+$space_m:16px;
+$space_l:22px;
+$space_xl:40px;
+$space_xxl:56px;
+$space_xxxl:72px;
+
+
+
+// =====================================
+// base
+// =====================================
+body{
+    font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: $theme-color-dark;
+}
+a:hover{
+    cursor: pointer;
+    opacity: .6;
+}
+
+
+
+// =====================================
+// header
+// =====================================
+
+#header{
+    position: fixed;
+    z-index: 10;
+    opacity: 0;
+    transition: all 1s;
+    &.is-active{
+        opacity: 1;
+        transition: all 1s;
+    }
+    .c-header{
+        position: relative;
+        width: 100vw;
+        height: 60px;
+        background: $theme-color-light__tp;
+        @include mq(){
+            .hamburger-menu{
+                position: absolute;
+                right: 0;
+                padding: 14px 20px;
+                .hamburger, .hamburger span{
+                    display: inline-block;
+                    transition: all .4s;
+                    box-sizing: border-box;
+                }
+                .hamburger{
+                    position: relative;
+                    width: 36px;
+                    height: 30px;
+                }
+                .hamburger span{
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    height: 4px;
+                    background-color: $theme-color-dark;
+                    border-radius: 4px;
+                }
+                .hamburger span:nth-of-type(1){
+                    top: 0;
+                }
+                .hamburger span:nth-of-type(2){
+                    top: 13px;
+                }
+                .hamburger span:nth-of-type(3){
+                    bottom: 0;
+                }
+                .hamburger.active span:nth-of-type(1) {
+                    -webkit-transform: translateY(13px) rotate(-315deg);
+                    transform: translateY(13px) rotate(-315deg);
+                }
+                .hamburger.active span:nth-of-type(2) {
+                    opacity: 0;
+                }
+                .hamburger.active span:nth-of-type(3) {
+                    -webkit-transform: translateY(-13px) rotate(315deg);
+                    transform: translateY(-13px) rotate(315deg);
+                }
+            }
+        }
+        .c-header-left{
+            position: absolute;
+            left: 25px;
+            .c-header-icon{
+                font-family: 'Pacifico', cursive;
+                display: inline-block;
+                border-radius: 75px;
+                text-align: center;
+                line-height: 60px;
+                font-size: $font-size_l;
+                color: $theme-color-dark;
+            }
+        }
+        .c-header-right{
+            position: absolute;
+            right: 25px;
+            height: 60px;
+            @include mq(){
+                height: calc(100vh - 60px);
+                width: 100vw;
+                top:60px;
+                right: initial;
+                left: 100vw;
+                background: $theme-color-dark__tp;
+                transition: left .4s;
+                &.active{
+                    left: 0;
+                    transition: all .4s;
+                }
+            }
+            .c-header-right-list{
+                display: flex;
+                line-height: 60px;
+                font-size: $font-size_m;
+                @include mq(){
+                    flex-direction: column;
+                }
+                li{
+                    padding: 0 20px;
+                    @include mq(){
+                        text-align: center;
+                        font-size: $font-size_l;
+                        padding: 15px;
+                    }
+                    a{
+                        display: block;
+                        @include mq(){
+                            color: $theme-color-light;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+// =====================================
+// main
+// =====================================
+#main{
+    position: absolute;
+    top:0;
+    .dummy{
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+    }
+    .container{
+        position: relative;
+        z-index: 5;
+        width: 100vw;
+        .c-title{
+            text-align: center;
+            font-size: $font-size_xxl;
+            padding-top: $space_xxl;
+            padding-bottom: $space_xl;
+            color: $theme-color-dark;
+            text-shadow:.5px .5px 0 $theme-color-light, -.5px -.5px 0 $theme-color-light,
+              -.5px .5px 0 $theme-color-light, .5px -.5px 0 $theme-color-light,
+              0px .5px 0 $theme-color-light,  0 -.5px 0 $theme-color-light,
+              -.5px 0 0 $theme-color-light, .2px 0 0 $theme-color-light;
+            font-family: 'Oswald', sans-serif;
+        }
+    }
+
+
+// =====================================
+// hero
+// =====================================
+    .c-hero{
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        position: fixed;
+        .black-surface{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .6));
+            z-index: 1;
+        }
+        img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            transform: scale(1.2);
+            @include mq(){
+                width: initial;
+                height: 100%;
+                left: -50%;
+            }
+            &.is-active{
+                transform: scale(1);
+                transition: transform 5s;
+                opacity: 1;
+            }
+        }
+        .c-hero-phrase{
+            z-index: 2;
+            color: white;
+            width: 100vw;
+            position: absolute;
+            font-size: $font-size_top;
+            text-align: center;
+            bottom: 30px;
+            letter-spacing: 30px;
+            font-family: 'Oswald', sans-serif;
+            br{
+                display: none;
+            }
+            @include mq(){
+                font-size: $font-size_xxxl;
+                bottom: calc(50vh - 56px);
+                br{
+                    display: inline;
+                }
+                span{
+                    display: none;
+                }
+            }
+        }
+    }
+
+// =====================================
+// message
+// =====================================
+.c-message{
+    height: 100vh;
+    background: $theme-color-dark;
+    padding-top: 15%;
+    box-sizing: border-box;
+    @include mq(){
+        padding-top: 55%;
+    }
+    .c-message-body{
+        color:white;
+        text-align: center;
+        font-size: 80px;
+        line-height: 120px;
+        margin-left: -15%;
+        opacity: 0;
+        @include mq(){
+            font-size: 22px;
+            line-height: 80px;
+        }
+        span{
+            opacity: 0;
+        }
+    }
+    .c-message-person{
+        color: white;
+        text-align: right;
+        font-size: $font-size_l;
+        padding-right: 10%;
+        margin-top: 10%;
+        opacity: 0;
+        @include mq(){
+            font-size: 8px;
+        }
+    }
+}
+
+
+// =====================================
+// intro
+// =====================================
+    .c-intro{
+        height: 100vh;
+        background: $theme-color-dark;
+        @include mq(){
+            height: initial;
+        }
+        .c-intro-body{
+            width: $site-width;
+            height: 100vh;
+            margin: 0 auto;
+            border-radius: 6px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate(0, 50px);
+            padding: 100px 0;
+            @include mq(){
+                width: 100vw;
+                height: initial;
+            }
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+            .c-intro-body-icon{
+                width: 300px;
+                height: 300px;
+                border-radius: 150px;
+                overflow: hidden;
+                position: relative;
+                margin-left: 100px;
+                margin-top: 15%;
+                float: left;
+                @include mq(){
+                    margin-left: calc(50% - 150px);
+                }
+                img{
+                    height: 100%;
+                    position: absolute;
+                    left: -25px;
+                }
+            }
+
+            .c-intro-body-detail{
+                width: 500px;
+                height: 300px;
+                float: left;
+                margin-top: 15%;
+                margin-left: 40px;
+                @include mq(){
+                    width: 100vw;
+                    margin-left: initial;
+                    height: initial;
+                    margin-bottom: 40px;
+                }
+                .space{
+                    @include mq(){
+                        display: none;
+                    }
+                }
+                p{
+                    color: white;
+                    text-align: center;
+                    font-size: $font-size_s;
+                    line-height: 50px;
+                    &.name{
+                        font-size: $font-size_xxl;
+                        line-height: 60px;
+                        @include mq(){
+                            line-height: 32px;
+                        }
+                        br{
+                            display: none;
+                            @include mq(){
+                                display: inline;
+                            }
+                        }
+                        .age_home{
+                            font-size: $font-size_ss;
+                        }
+                    }
+                    &.career{
+                        @include mq(){
+                            line-height: 32px;
+                            margin-top: 25px;
+                        }
+                        .br{
+                            display: none;
+                            @include mq(){
+                                display: inline;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .c-intro-body-sns{
+                width: $site-width;
+                height: 200px;
+                clear: both;
+                box-sizing: border-box;
+                text-align: center;
+                display: flex;
+                justify-content: space-around;
+                padding: 90px 150px 0 150px;
+                @include mq(){
+                    width: 100vw;
+                    padding: initial;
+                    height: initial;
+                    margin-bottom: 40px;
+                }
+                i{
+                    font-size: 80px;
+                    color: white;
+                    display: block;
+                    @include mq(){
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
+    }
+
+// =====================================
+// contents
+// =====================================
+    .c-contents{
+        display: flex;
+        flex-wrap: wrap;
+        font-family: 'Oswald', sans-serif;
+        @include mq(){
+            flex-wrap: initial;
+            flex-direction: column;
+        }
+        .flex{
+            width: 50vw;
+            height: 150px;
+            text-align: center;
+            line-height: 150px;
+            font-size: $font-size_xl;
+            @include mq(){
+                width: 100vw;
+            }
+            a{
+                display: block;
+                width: 100%;
+                height: 100%;
+                color: $theme-color-dark;
+                text-shadow:.5px .5px 0 $theme-color-light, -.5px -.5px 0 $theme-color-light,
+                  -.5px .5px 0 $theme-color-light, .5px -.5px 0 $theme-color-light,
+                  0px .5px 0 $theme-color-light,  0 -.5px 0 $theme-color-light,
+                  -.5px 0 0 $theme-color-light, .5px 0 0 $theme-color-light;
+                &:hover{
+                    opacity: .6;
+                    background: rgba(0, 0, 0, .6);
+                }
+            }
+            &:nth-child(1){
+                background-image: url("./img/blog.webp");
+                background-size: cover;
+                background-position: center;
+            }
+            &:nth-child(2){
+                background-image: url("./img/portfolio.webp");
+                background-size: cover;
+                background-position: center;
+            }
+            &:nth-child(3){
+                background-image: url("./img/skill.webp");
+                background-size: cover;
+                background-position: center;
+            }
+            &:nth-child(4){
+                background-image: url("./img/contact.webp");
+                background-size: cover;
+                background-position: center;
+            }
+        }
+    }
+
+// =====================================
+// blog
+// =====================================
+    .c-blog{
+        height: 350px;
+        background-image: url("./img/blog.webp");
+        background-size: cover;
+        background-position: center;
+        .c-title{
+            opacity: 0;
+            transform: translate(0, 50px);
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+        }
+        .c-blog-body{
+            width: 50%;
+            height: 100px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translate(0, 50px);
+            @include mq(){
+                width: 90%;
+            }
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+            .articles{
+                background: $theme-color-dark__tp;
+                border-radius: 6px;
+                // border: 2px solid $theme-color-dark;
+                width: 100%;
+                height:80px;
+                padding: 20px 30px;
+                overflow-y: scroll;
+                box-sizing: border-box;
+                @include mq(){
+                    overflow-x: scroll;
+                    padding: 10px 15px;
+                }
+                .article{
+                    font-size: $font-size_s;
+                    margin-bottom: 8px;
+                    a{
+                        display: block;
+                        color: white;
+                        .article-date{
+                            display: inline-block;
+                            width: 100px;
+                            text-align: left;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+// =====================================
+// portfolio
+// =====================================
+    .c-portfolio{
+        height: 630px;
+        background-image: url("./img/portfolio.webp");
+        background-size: cover;
+        background-position: center;
+        .c-title{
+            opacity: 0;
+            transform: translate(0, 50px);
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+        }
+    }
+
+    .c-container-body{
+        width: $site-width;
+        height: 400px;
+        border-radius: 6px;
+        background: $theme-color-dark__tp;
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+        opacity: 0;
+        transform: translate(0, 50px);
+        @include mq(){
+            width: 90%;
+        }
+        &.move{
+            transform: translate(0, 0);
+            opacity: 1;
+            transition: all 1s;
+        }
+        .i-arrow{
+            position: absolute;
+            display: block;
+            height: 400px;
+            line-height: 400px;
+            &::before{
+                font-size: 60px;
+                color: $theme-color-light;
+                @include mq(){
+                    font-size: 40px;
+                }
+            }
+            &.left-arrow{
+                left: 30px;
+                @include mq(){
+                    left: 5px;
+                }
+            }
+            &.right-arrow{
+                right: 30px;
+                @include mq(){
+                    right: 5px;
+                }
+            }
+            &:hover{
+                opacity: .6;
+                cursor: pointer;
+            }
+        }
+        .c-portfolio-flame{
+            box-sizing: border-box;
+            width: 800px;
+            height: 340px;
+            margin: 30px auto;
+            overflow: hidden;
+            position: relative;
+            @include mq(){
+                width: calc(100vw * 0.64);
+            }
+            .all-portfolio{
+                height: 340px;
+                width: 1600px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: flex;
+                @include mq(){
+                    width: calc(100vw * 0.64 * 4);
+                }
+                .c-portfolio-item{
+                    height: 340px;
+                    width: 400px;
+                    position: relative;
+                    @include mq(){
+                        width: calc(100vw * 0.64);
+                    }
+                    .c-portfolio-img{
+                        width: 360px;
+                        height: 200px;
+                        overflow: hidden;
+                        position: absolute;
+                        top: 10px;
+                        left: 20px;
+                        @include mq(){
+                            left: 0;
+                            width: calc(100vw * 0.64);
+                            height: 150px;
+                        }
+                        img{
+                            height: 100%;
+                            margin: 0 auto;
+                            display: block;
+                        }
+                    }
+                    .c-portfolio-detail{
+                        width: 360px;
+                        height: 130px;
+                        box-sizing: border-box;
+                        display: block;
+                        position: absolute;
+                        top: 210px;
+                        left: 20px;
+                        padding: 15px 20px;
+                        color: white;
+                        line-height: 30px;
+                        @include mq(){
+                            width: calc(100vw * 0.64);
+                            left: 0;
+                            top: 180px;
+                            padding: initial;
+                            line-height: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+// =====================================
+// skill
+// =====================================
+    .c-skill{
+        height: 730px;
+        background-image: url("./img/skill.webp");
+        background-size: cover;
+        background-position: center;
+        @include mq(){
+            height: 900px;
+        }
+        .c-title{
+            opacity: 0;
+            transform: translate(0, 50px);
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+        }
+        .c-container-body{
+            height: 500px;
+            opacity: 0;
+            transform: translate(0, 50px);
+            @include mq(){
+                height: 660px;
+            }
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+            .c-skill-flame{
+                width: 800px;
+                height: 420px;
+                display: flex;
+                flex-wrap: wrap;
+                margin: 40px auto;
+                @include mq(){
+                    width: 100%;
+                    height: 600px;
+                    margin: 40px auto 30px auto;
+                }
+                .c-skill-item{
+                    width: 400px;
+                    height: 140px;
+                    box-sizing: border-box;
+                    position: relative;
+                    @include mq(){
+                        width: 100%;
+                        height: 100px;
+                    }
+                    .c-skill-item-left{
+                        width: 140px;
+                        height: 140px;
+                        box-sizing: border-box;
+                        left: 0;
+                        top: 0;
+                        position: relative;
+                        @include mq(){
+                            height: 100px;
+                            width: 100px;
+                        }
+                        i{
+                            font-size: 75px;
+                            width: 140px;
+                            text-align: center;
+                            @include mq(){
+                                font-size: 50px;
+                            }
+                            &.i-baseball,&.i-skate{
+                                font-size: 60px;
+                                position: absolute;
+                                top: 10px;
+                                @include mq(){
+                                    font-size: 35px;
+                                }
+                            }
+                        }
+                        p{
+                            font-size: $font-size_m;
+                            text-align: center;
+                            width: 140px;
+                            position: absolute;
+                            bottom: 30px;
+                            font-family: 'Oswald', sans-serif;
+                        }
+                    }
+                    .c-skill-item-right{
+                        width: 230px;
+                        height: 140px;
+                        position: absolute;
+                        box-sizing: border-box;
+                        left: 140px;
+                        top: 0;
+                        @include mq(){
+                            height: 100px;
+                            left: 100px;
+                        }
+                        .skill-meter-flame{
+                            width: 200px;
+                            height: 30px;
+                            border: 2px solid black;
+                            margin: 45px auto;
+                            overflow: hidden;
+                            border-radius: 3px;
+                            background: $meter-color;
+                            @include mq(){
+                                margin: 25px auto;
+                                width: 180px;
+                                height: 20px;
+                            }
+                            .skill-meter{
+                                height: 100%;
+                                background: black;
+                                &.html.move{
+                                    margin-left: 80px;
+                                    transition: all 1.5s;
+                                    @include mq(){
+                                        margin-left: 72px;
+                                    }
+                                }
+                                &.css.move{
+                                    margin-left: 70px;
+                                    transition: all 1.5s;
+                                    @include mq(){
+                                        margin-left: 63px;
+                                    }
+                                }
+                                &.js.move{
+                                    margin-left: 60px;
+                                    transition: all 1.5s;
+                                    @include mq(){
+                                        margin-left: 54px;
+                                    }
+                                }
+                                &.php.move{
+                                    margin-left: 55px;
+                                    transition: all 1.5s;
+                                    @include mq(){
+                                        margin-left: 50px;
+                                    }
+                                }
+                                &.skate.move{
+                                    margin-left: 150px;
+                                    transition: all 1.5s;
+                                    @include mq(){
+                                        margin-left: 135px;
+                                    }
+                                }
+                                &.baseball.move{
+                                    margin-left: 130px;
+                                    transition: all 1.5s;
+                                    @include mq(){
+                                        margin-left: 127px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+// =====================================
+// contact
+// =====================================
+    .c-contact{
+        width: 100%;
+        height: 500px;
+        background-image: url("./img/contact.webp");
+        background-size: cover;
+        background-position: left;
+        .c-title{
+            opacity: 0;
+            transform: translate(0, 50px);
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+        }
+        .c-contact-body{
+            width: $site-width;
+            height: 300px;
+            // background: $theme-color-dark__tp;
+            // border-radius: 6px;
+            margin: 0 auto;
+            overflow: hidden;
+            opacity: 0;
+            transform: translate(0, 50px);
+            @include mq(){
+                width: 100vw;
+            }
+            &.move{
+                transform: translate(0, 0);
+                opacity: 1;
+                transition: all 1s;
+            }
+            p{
+                text-align: center;
+                font-size: $font-size_m;
+                color: white;
+                margin-top: 50px;
+                br{
+                    display: none;
+                    @include mq(){
+                        display: inline;
+                    }
+                }
+            }
+            i{
+                color: white;
+                font-size: $font-size_m;
+                margin-top: 80px;
+                text-align: center;
+                display: block;
+                span{
+                    font-family: 'Yu Mincho Light','YuMincho','Yu Mincho','游明朝体',sans-serif;
+                }
+            }
+        }
+    }
+}
+
+// =====================================
+// footer
+// =====================================
+#footer{
+    width: 100%;
+    height: 40px;
+    background: $theme-color-dark;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+}
+
+
