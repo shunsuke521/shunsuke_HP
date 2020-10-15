@@ -191,7 +191,7 @@
             <div class="c-contact-body js-contact">
                 <p class="">お問い合わせの際は<br>下記メールアドレスまでご連絡ください</p>
                 <div class="address">
-                    <i class="far fa-envelope"><span>&nbsp;&nbsp;~~~~~~~@gmail.com</span></i>
+                    <i class="far fa-envelope"><span>&nbsp;&nbsp;shunsuke459@gmail.com</span></i>
                 </div>
             </div>
         </section>
